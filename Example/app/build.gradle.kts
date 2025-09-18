@@ -40,7 +40,7 @@ android {
 }
 
 dependencies {
-    implementation("io.deepone.sdk:deeponenesdk:1.0.10")
+    implementation("io.deepone.sdk:deeponesdk:1.0.10")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

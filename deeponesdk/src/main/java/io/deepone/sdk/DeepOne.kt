@@ -97,12 +97,12 @@ class DeepOne private constructor() {
      * Tracks if this is the first session ever (persists across reinstalls via secure storage)
      */
     private var isFirstSession: Boolean
-        get() = DeepOneNetworking.getSecureData(DeepOneConfig.FIRST_SESSION_MARKER_KEY) == null
+        get() = DeepOneNetworking.getSecureData(DeepOneConfig.FIRST_SESSION_MARKER_KEY, DeepOneConfig.DEFAULT_STORAGE_GROUP) == null
         set(value) {
             if (!value) {
-                DeepOneNetworking.setSecureData(byteArrayOf(), DeepOneConfig.FIRST_SESSION_MARKER_KEY)
+                DeepOneNetworking.setSecureData(byteArrayOf(), DeepOneConfig.FIRST_SESSION_MARKER_KEY, DeepOneConfig.DEFAULT_STORAGE_GROUP)
             } else {
-                DeepOneNetworking.deleteSecureData(DeepOneConfig.FIRST_SESSION_MARKER_KEY)
+                DeepOneNetworking.deleteSecureData(DeepOneConfig.FIRST_SESSION_MARKER_KEY, DeepOneConfig.DEFAULT_STORAGE_GROUP)
             }
         }
     
@@ -208,7 +208,7 @@ class DeepOne private constructor() {
      * Clears all persisted attribution data (resets first session tracking)
      */
     public fun clearAttributionData() {
-        DeepOneNetworking.deleteSecureData(DeepOneConfig.FIRST_SESSION_MARKER_KEY)
+        DeepOneNetworking.deleteSecureData(DeepOneConfig.FIRST_SESSION_MARKER_KEY, DeepOneConfig.DEFAULT_STORAGE_GROUP)
     }
     
     /**

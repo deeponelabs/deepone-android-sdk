@@ -21,6 +21,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setupDeepOne()
         enableEdgeToEdge()
+
         setContent {
             ExampleTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->

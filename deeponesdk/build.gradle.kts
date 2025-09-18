@@ -8,7 +8,7 @@ plugins {
 }
 
 val ciVersion = providers.gradleProperty("version").orNull
-val publishedVersion = ciVersion ?: "1.0.0"
+val publishedVersion = ciVersion ?: "1.0.11"
 
 signing {
     useGpgCmd()
