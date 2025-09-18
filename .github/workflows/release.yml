@@ -1,0 +1,71 @@
+name: publish-release
+
+on:
+  push:
+    tags:
+      - '*'          # publish on any tag (e.g., 1.0.2 or v1.0.2)
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Derive version from tag
+        id: ver
+        shell: bash
+        run: |
+          TAG="${GITHUB_REF##*/}"           # "1.2.3" or "v1.2.3"
+          VERSION="${TAG#v}"                # strip leading 'v' if present
+          if [[ -z "$VERSION" ]]; then
+            echo "Tag is empty → cannot compute version"; exit 1
+          fi
+          echo "VERSION=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Set up JDK and import GPG key
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: gradle
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg-passphrase:  ${{ secrets.GPG_PASSPHRASE }}
+
+      # ---- Sanity checks ----
+      - name: Sanity - show derived version / Java / Gradle
+        run: |
+          echo "Derived version: ${{ steps.ver.outputs.VERSION }}"
+          java -version
+          ./gradlew --version
+
+      - name: Sanity - list imported GPG secret keys
+        run: gpg --list-secret-keys --keyid-format=long
+      # -----------------------
+
+      - name: Configure Gradle (Central + signing via gpg)
+        shell: bash
+        run: |
+          mkdir -p ~/.gradle
+          cat > ~/.gradle/gradle.properties <<'EOF'
+          # Sonatype Central Portal token credentials
+          mavenCentralUsername=${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          mavenCentralPassword=${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+
+          # Use system gpg imported by setup-java
+          signing.gnupg.useGpgCmd=true
+          signing.gnupg.keyName=${{ secrets.GPG_KEY_ID }}
+          signing.gnupg.passphrase=${{ secrets.GPG_PASSPHRASE }}
+
+          # Let the Vanniktech plugin auto-release after upload
+          mavenCentralAutomaticPublishing=true
+          EOF
+
+      - name: Build (AAR + sources/javadoc jars)
+        run: ./gradlew clean assembleRelease --no-daemon
+
+      - name: Publish to Maven Central (auto-release)
+        run: ./gradlew -Pversion=${{ steps.ver.outputs.VERSION }} publishToMavenCentral --no-daemon --stacktrace
