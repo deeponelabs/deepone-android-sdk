@@ -8,7 +8,7 @@ plugins {
 }
 
 val ciVersion = providers.gradleProperty("version").orNull
-val publishedVersion = ciVersion ?: "1.0.11"
+val publishedVersion = ciVersion ?: "1.0.12"
 
 signing {
     useGpgCmd()
@@ -16,14 +16,7 @@ signing {
 
 mavenPublishing {
     publishToMavenCentral(automaticRelease = true)
-    
-    // Only sign for remote publishing, not local
-    val isLocalPublish = gradle.startParameter.taskNames.any { 
-        it.contains("ToMavenLocal") || it.contains("ToLocalRepository") 
-    }
-    if (!isLocalPublish) {
-        signAllPublications()
-    }
+    signAllPublications()
 
     coordinates(
         groupId = "io.deepone.sdk",
@@ -111,6 +104,6 @@ android {
 }
 
 dependencies {
-    implementation("io.deepone.sdk:deeponenetworking:1.0.10")
+    implementation("io.deepone.sdk:deeponenetworking:1.0.12")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 }

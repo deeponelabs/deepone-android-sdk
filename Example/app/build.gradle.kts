@@ -9,7 +9,7 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "io.deepone.app"
+        applicationId = "cc.testing.app"
         minSdk = 24
         targetSdk = 36
         versionCode = 1
@@ -40,7 +40,7 @@ android {
 }
 
 dependencies {
-    implementation("io.deepone.sdk:deeponesdk:1.0.10")
+    implementation("io.deepone.sdk:deeponesdk:1.0.11")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
