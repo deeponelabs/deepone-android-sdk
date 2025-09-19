@@ -104,6 +104,6 @@ android {
 }
 
 dependencies {
-    implementation("io.deepone.sdk:deeponenetworking:1.0.14")
+    implementation("io.deepone.sdk:deeponenetworking:1.0.15")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 }

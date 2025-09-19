@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
+        android:networkSecurityConfig="@xml/network_security_config"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -14,10 +15,14 @@
 
         <meta-data
             android:name="DeepOne.test_key"
-            android:value="test_key_here" />
+            android:value="OjC0Bvo8sgKmI8HebYCKF2Dtcg8twZxZ" />
         <meta-data
             android:name="DeepOne.live_key"
-            android:value="live_key_here" />
+            android:value="vM1CZFYatLW5Ssx34y1FeBe5hKCYfLVo" />
+
+        <meta-data
+            android:name="DeepOne.baseUrl"
+            android:value="https://api.tryluckybastard.xyz" />
 
         <activity
             android:name=".MainActivity"
