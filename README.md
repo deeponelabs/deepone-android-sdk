@@ -22,7 +22,7 @@ Add the following to your app-level `build.gradle` file:
 
 ```gradle
 dependencies {
-    implementation 'io.deepone.sdk:deeponesdk:1.0.13'
+    implementation 'io.deepone.sdk:deeponesdk:1.0.14'
 }
 ```
 
@@ -30,7 +30,7 @@ dependencies {
 
 ```kotlin
 dependencies {
-    implementation("io.deepone.sdk:deeponesdk:1.0.13")
+    implementation("io.deepone.sdk:deeponesdk:1.0.14")
 }
 ```
 
