@@ -8,7 +8,7 @@ plugins {
 }
 
 val ciVersion = providers.gradleProperty("version").orNull
-val publishedVersion = ciVersion ?: "1.0.12"
+val publishedVersion = ciVersion ?: "1.0.13"
 
 signing {
     useGpgCmd()
@@ -104,6 +104,6 @@ android {
 }
 
 dependencies {
-    implementation("io.deepone.sdk:deeponenetworking:1.0.12")
+    implementation("io.deepone.sdk:deeponenetworking:1.0.13")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 }
